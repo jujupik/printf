@@ -34,6 +34,20 @@ void handle_padding(t_flag_data *flag_data, char **str2)
 	free(s2);
 }
 
+void handle_padding_c(t_flag_data *flag_data, char **str2)
+{
+	char	*s2;
+
+	if (flag_data->padding <= 1)
+		return ;
+	s2 = ft_strnew_c(flag_data->padding - 1, ' ');
+	if (flag_data->minus == TRUE)
+		ft_str_replace_back(str2, s2);
+	else
+		ft_str_replace_front(s2, str2);
+	free(s2);
+}
+
 void handle_precision(t_flag_data *flag_data, char **str)
 {
 	char	*s2;

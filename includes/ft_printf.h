@@ -100,6 +100,7 @@ void			handle_precision(t_flag_data *flag_data, char **str);
 void			handle_padding_num(t_flag_data *flag_data, char **str2);
 long long		handle_lh(t_data *data, t_flag_data *flag_data);
 long long		handle_lh_unsigned(t_data *data, t_flag_data *flag_data);
+void			handle_padding_c(t_flag_data *flag_data, char **str2);
 
 int				ft_isdigit(int c);
 char			*fill(char	*str, char c, int i);

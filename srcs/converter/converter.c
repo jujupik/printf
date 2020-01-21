@@ -53,8 +53,10 @@ void converter_c(t_data *data, t_flag_data *flag_data)
 	handle_wildcard(data, flag_data);
 	c = va_arg( data->arg, int );
 	str = ft_strnew_c(1, c);
-	handle_padding(flag_data, &str);
+	handle_padding_c(flag_data, &str);
 	add_str_to_buffer(data, str);
+	if (c == '\0')
+		add_char_to_buffer(data, '\0');
 	free(str);
 }
 
