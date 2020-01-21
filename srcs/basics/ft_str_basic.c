@@ -181,3 +181,12 @@ char	*fill(char	*str, char c, int i)
 	}
 	return (str);
 }
+
+char *ft_strnew_c(size_t len, char c)
+{
+	char *result;
+
+	result = ft_strnew(len);
+	fill(result, c, len);
+	return (result);
+}

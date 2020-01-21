@@ -66,6 +66,7 @@ void ft_strcat(char *s1, char *s2);
 void ft_strncat(char *s1, char *s2, size_t len);
 void ft_target_strncat(char *s1, char *s2, size_t start, size_t len);
 char *ft_strcut(char **s1, char delim);
+char *ft_strnew_c(size_t len, char c);
 
 void handle_converter(t_data *data, t_flag_data *flag_data, char *cmd, size_t i);
 void converter_s(t_data *data, t_flag_data *flag_data);
@@ -91,7 +92,13 @@ size_t flag_digit(t_flag_data *data, char *cmd, int i);
 size_t flag_l(t_flag_data *data, char *cmd, int i);
 size_t flag_h(t_flag_data *data, char *cmd, int i);
 size_t flag_wildcard(t_flag_data *data, char *cmd, int i);
+
 void handle_wildcard(t_data *data, t_flag_data *flag_data);
+void handle_padding(t_flag_data *flag_data, char **str2);
+void handle_precision(t_flag_data *flag_data, char **str);
+void handle_padding_num(t_flag_data *flag_data, char **str2);
+long long	handle_lh(t_data *data, t_flag_data *flag_data);
+long long	handle_lh_unsigned(t_data *data, t_flag_data *flag_data);
 
 int	ft_isdigit(int c);
 char	*fill(char	*str, char c, int i);
