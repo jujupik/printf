@@ -66,9 +66,15 @@ size_t flag_wildcard(t_flag_data *data, char *cmd, int i)
 	(void)cmd;
 	(void)i;
 	if (data->point == FALSE)
+	{
 		data->wildcard1 = TRUE;
+		data->padding = -128;
+	}
 	else
+	{
 		data->wildcard2 = TRUE;
+		data->precision = -128;
+	}
 	return (1);
 }
 

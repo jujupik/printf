@@ -8,7 +8,7 @@ int main()
 {
 	// test_main();
 
-	char *cmd = "{%*s}";
+	char *cmd = "{%*7s}";
 	//int value = 42;
 	char *value = "blab";
 

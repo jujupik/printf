@@ -10,11 +10,12 @@ void handle_wildcard(t_data *data, t_flag_data *flag_data)
 		if (j < 0)
 		{
 			flag_data->minus = TRUE;
-			flag_data->padding = -j;
+			if (flag_data->padding < 0)
+				flag_data->padding = -j;
 		}
-		else
-			flag_data->padding = j;
+		else if (flag_data->padding < 0)
+				flag_data->padding = j;
 	}
-	if (flag_data->wildcard2 == TRUE)
+	if (flag_data->wildcard2 == TRUE && flag_data->precision < 0)
 		flag_data->precision = va_arg(data->arg, int);
 }
