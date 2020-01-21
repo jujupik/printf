@@ -31,7 +31,7 @@ void converter_d(t_data *data, t_flag_data *flag_data)
 	}
 	str = ft_itoa(i);
 	handle_precision(flag_data, &str);
-	if (flag_data->space == TRUE && flag_data->plus == FALSE)
+	if (flag_data->space == TRUE && flag_data->plus == FALSE && neg == FALSE)
 		ft_str_replace_front(" ", &str);
 	if (flag_data->plus == TRUE)
 	{

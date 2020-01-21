@@ -27,7 +27,7 @@ OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 ##
 
 ##Basics flags
-CFLAGS=		-fsanitize=address -g -Wall -Wextra -Werror
+CFLAGS=	 -Wall -Wextra -Werror
 
 ##Create the flags to includes every .h needed by this program
 IFLAGS =	$(foreach dir, $(INC_DIR), -I$(dir))

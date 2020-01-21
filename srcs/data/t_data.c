@@ -1,8 +1,8 @@
 #include "ft_printf.h"
 
-t_data create_data(char *s_buffer, int fd)
+t_data	create_data(char *s_buffer, int fd)
 {
-	t_data result;
+	t_data	result;
 
 	result.len = 0;
 	result.fd = fd;
@@ -11,16 +11,17 @@ t_data create_data(char *s_buffer, int fd)
 	return (result);
 }
 
-void print_buffer(t_data *data)
+void	print_buffer(t_data *data)
 {
 	if (data->s_buffer == NULL)
 		write(data->fd, data->buffer, data->size);
 	else
-		ft_target_strncat(data->s_buffer, data->buffer, data->len - data->size, data->size);
+		ft_target_strncat(data->s_buffer, data->buffer,
+			data->len - data->size, data->size);
 	data->size = 0;
 }
 
-void add_char_to_buffer(t_data *data, char c)
+void	add_char_to_buffer(t_data *data, char c)
 {
 	if (data->size >= PRINTF_BUFFER_SIZE - 1)
 		print_buffer(data);
@@ -30,9 +31,9 @@ void add_char_to_buffer(t_data *data, char c)
 	data->len++;
 }
 
-void add_str_to_buffer(t_data *data, char *str)
+void	add_str_to_buffer(t_data *data, char *str)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (str[i] != '\0')
@@ -42,9 +43,9 @@ void add_str_to_buffer(t_data *data, char *str)
 	}
 }
 
-void add_nb_char_to_buffer(t_data *data, char c, size_t nb)
+void	add_nb_char_to_buffer(t_data *data, char c, size_t nb)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (i < nb)
