@@ -12,7 +12,10 @@ size_t flag_zero(t_flag_data *data, char *cmd, int i)
 {
 	(void)cmd;
 	(void)i;
-	data->zero = TRUE;
+	if (data->point == FALSE)
+		data->zero = TRUE;
+	else
+		data->precision = 0;
 	return (1);
 }
 
@@ -21,6 +24,7 @@ size_t flag_minus(t_flag_data *data, char *cmd, int i)
 	(void)cmd;
 	(void)i;
 	data->minus = TRUE;
+	data->zero = FALSE;
 	return (1);
 }
 
@@ -45,6 +49,7 @@ size_t flag_point(t_flag_data *data, char *cmd, int i)
 	(void)cmd;
 	(void)i;
 	data->point = TRUE;
+	data->zero = FALSE;
 	return (1);
 }
 
@@ -57,7 +62,10 @@ size_t flag_digit(t_flag_data *data, char *cmd, int i)
 	if (data->point == FALSE)
 		data->padding = value;
 	else
+	{
 		data->precision = value;
+		data->zero = FALSE;
+	}
 	return (nbr_len(value, 10));
 }
 
@@ -74,6 +82,7 @@ size_t flag_wildcard(t_flag_data *data, char *cmd, int i)
 	{
 		data->wildcard2 = TRUE;
 		data->precision = -128;
+		data->zero = FALSE;
 	}
 	return (1);
 }

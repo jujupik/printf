@@ -7,10 +7,10 @@ int generate_nbr(int min, int max)
 	return ((rand() % (max - min + 1)) + min);
 }
 
-static void set_flag_str(char **str, int padding, int precision, BOOL wildcard1, BOOL wildcard2)
+static void set_flag_str(char **str, int padding, int precision, BOOL *wildcard1, BOOL *wildcard2)
 {
 	BOOL sharp = (generate_nbr(0, 1) == 0 ? FALSE : TRUE);
-	BOOL zero = (generate_nbr(0, 1) == 0 ? FALSE : TRUE);
+	BOOL zero = (generate_nbr(0, 1) == 0 ? FALSE : FALSE);
 	BOOL minus = (generate_nbr(0, 1) == 0 ? FALSE : TRUE);
 	BOOL plus = (generate_nbr(0, 1) == 0 ? FALSE : TRUE);
 	BOOL space = (generate_nbr(0, 1) == 0 ? FALSE : TRUE);
@@ -31,7 +31,7 @@ static void set_flag_str(char **str, int padding, int precision, BOOL wildcard1,
 		ft_str_replace_back(str, "+");
 	if (padding_bool == TRUE)
 	{
-		if (wildcard1 == FALSE)
+		if (*wildcard1 == FALSE)
 		{
 			char *tmp = ft_itoa(padding);
 			ft_str_replace_back(str, tmp);
@@ -41,14 +41,14 @@ static void set_flag_str(char **str, int padding, int precision, BOOL wildcard1,
 			ft_str_replace_back(str, "*");
 	}
 	else
-		wildcard1 = FALSE;
+		*wildcard1 = FALSE;
 	if (point == TRUE)
 		ft_str_replace_back(str, ".");
 	else
-		wildcard2 = FALSE;
+		*wildcard2 = FALSE;
 	if (precision_bool == TRUE && point == TRUE)
 	{
-		if (wildcard2 == FALSE)
+		if (*wildcard2 == FALSE)
 		{
 			char *tmp = ft_itoa(precision);
 			ft_str_replace_back(str, tmp);
@@ -80,14 +80,14 @@ void test_flag_int(int nb_test, BOOL flag, char *test)
 	for (int i = 0; i < nb_test; i++)
 	{
 		int value = generate_nbr(-100000, 100000);
-		BOOL wildcard1 = (generate_nbr(0, 1) == 0 ? FALSE : FALSE);
-		BOOL wildcard2 = (generate_nbr(0, 1) == 0 ? FALSE : FALSE);
+		BOOL wildcard1 = (generate_nbr(0, 1) == 0 ? TRUE : FALSE);
+		BOOL wildcard2 = (generate_nbr(0, 1) == 0 ? TRUE : FALSE);
 		int padding = generate_nbr(0, 30);
 		int precision = generate_nbr(0, 30);
 
 		char *str = ft_strdup("[%");
 		if (flag == TRUE)
-			set_flag_str(&str, padding, precision, wildcard1, wildcard2);
+			set_flag_str(&str, padding, precision, &wildcard1, &wildcard2);
 
 		ft_str_replace_back(&str, test);
 		ft_str_replace_back(&str, "]");
@@ -104,12 +104,12 @@ void test_flag_int(int nb_test, BOOL flag, char *test)
 		else if (flag == TRUE && wildcard1 == TRUE && wildcard2 == FALSE)
 		{
 			ret1 = sprintf(tmp1, str, padding, value);
-			ret2 = ft_sprintf(tmp1, str, padding, value);
+			ret2 = ft_sprintf(tmp2, str, padding, value);
 		}
 		else if (flag == TRUE && wildcard1 == FALSE && wildcard2 == TRUE)
 		{
 			ret1 = sprintf(tmp1, str, precision, value);
-			ret2 = ft_sprintf(tmp1, str, precision, value);
+			ret2 = ft_sprintf(tmp2, str, precision, value);
 		}
 		else
 		{
@@ -135,7 +135,7 @@ void test_flag_c(int nb_test, BOOL flag)
 
 	for (int i = 0; i < nb_test; i++)
 	{
-		char value = generate_nbr(30, 127);
+		char value = generate_nbr(0, 127);
 		BOOL wildcard1 = (generate_nbr(0, 1) == 0 ? FALSE : FALSE);
 		BOOL wildcard2 = (generate_nbr(0, 1) == 0 ? FALSE : FALSE);
 		int padding = generate_nbr(0, 30);
@@ -143,7 +143,7 @@ void test_flag_c(int nb_test, BOOL flag)
 
 		char *str = ft_strdup("[%");
 		if (flag == TRUE)
-			set_flag_str(&str, padding, precision, wildcard1, wildcard2);
+			set_flag_str(&str, padding, precision, &wildcard1, &wildcard2);
 		ft_str_replace_back(&str, "c]");
 
 		int ret1 = 0;
@@ -157,12 +157,12 @@ void test_flag_c(int nb_test, BOOL flag)
 		else if (flag == TRUE && wildcard1 == TRUE && wildcard2 == FALSE)
 		{
 			ret1 = sprintf(tmp1, str, padding, value);
-			ret2 = ft_sprintf(tmp1, str, padding, value);
+			ret2 = ft_sprintf(tmp2, str, padding, value);
 		}
 		else if (flag == TRUE && wildcard1 == FALSE && wildcard2 == TRUE)
 		{
 			ret1 = sprintf(tmp1, str, precision, value);
-			ret2 = ft_sprintf(tmp1, str, precision, value);
+			ret2 = ft_sprintf(tmp2, str, precision, value);
 		}
 		else
 		{
@@ -193,14 +193,14 @@ void test_flag_s(int nb_test, BOOL flag)
 		for (int j = 0; j < len; j++)
 			value[j] = generate_nbr(30, 127);
 		value[len] = '\0';
-		BOOL wildcard1 = (generate_nbr(0, 1) == 0 ? FALSE : FALSE);
-		BOOL wildcard2 = (generate_nbr(0, 1) == 0 ? FALSE : FALSE);
+		BOOL wildcard1 = (generate_nbr(0, 1) == 0 ? TRUE : FALSE);
+		BOOL wildcard2 = (generate_nbr(0, 1) == 0 ? TRUE : FALSE);
 		int padding = generate_nbr(0, 30);
 		int precision = generate_nbr(0, 30);
 
 		char *str = ft_strdup("[%");
 		if (flag == TRUE)
-			set_flag_str(&str, padding, precision, wildcard1, wildcard2);
+			set_flag_str(&str, padding, precision, &wildcard1, &wildcard2);
 		ft_str_replace_back(&str, "s]");
 
 		int ret1 = 0;
@@ -214,12 +214,12 @@ void test_flag_s(int nb_test, BOOL flag)
 		else if (flag == TRUE && wildcard1 == TRUE && wildcard2 == FALSE)
 		{
 			ret1 = sprintf(tmp1, str, padding, value);
-			ret2 = ft_sprintf(tmp1, str, padding, value);
+			ret2 = ft_sprintf(tmp2, str, padding, value);
 		}
 		else if (flag == TRUE && wildcard1 == FALSE && wildcard2 == TRUE)
 		{
 			ret1 = sprintf(tmp1, str, precision, value);
-			ret2 = ft_sprintf(tmp1, str, precision, value);
+			ret2 = ft_sprintf(tmp2, str, precision, value);
 		}
 		else
 		{
@@ -241,15 +241,15 @@ void test_main()
 {
 	srand(time(NULL));
 
-	int nb_test = 2000;
+	int nb_test = 200000;
 
-	test_flag_int(nb_test, FALSE, "d");
-	test_flag_int(nb_test, FALSE, "i");
-	test_flag_int(nb_test, FALSE, "o");
-	test_flag_int(nb_test, FALSE, "u");
-	test_flag_int(nb_test, FALSE, "x");
-	test_flag_int(nb_test, FALSE, "X");
-	test_flag_int(nb_test, FALSE, "p");
-	test_flag_c(nb_test, FALSE);
-	test_flag_s(nb_test, FALSE);
+	test_flag_int(nb_test, TRUE, "d");
+	test_flag_int(nb_test, TRUE, "i");
+	test_flag_int(nb_test, TRUE, "o");
+	test_flag_int(nb_test, TRUE, "u");
+	test_flag_int(nb_test, TRUE, "x");
+	test_flag_int(nb_test, TRUE, "X");
+	test_flag_int(nb_test, TRUE, "p");
+	test_flag_c(nb_test, TRUE);
+	test_flag_s(nb_test, TRUE);
 }

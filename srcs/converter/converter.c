@@ -15,32 +15,40 @@ void converter_s(t_data *data, t_flag_data *flag_data)
 	free(str2);
 }
 
-void converter_d(t_data *data, t_flag_data *flag_data)
+void	converter_d(t_data *data, t_flag_data *flag_data)
 {
-	long long i;
-	BOOL neg;
-	char *str;
+	long long	i;
+	BOOL		neg;
+	char		*str;
 
 	neg = FALSE;
 	handle_wildcard(data, flag_data);
 	i = handle_lh(data, flag_data);
 	if (i < 0)
 	{
+		flag_data->plus = FALSE;
 		neg = TRUE;
 		i = -i;
 	}
-	str = ft_itoa(i);
+	if (i == 0 && flag_data->point == TRUE && flag_data->precision == 0)
+		str = ft_strnew(1);
+	else
+		str = ft_itoa(i);
 	handle_precision(flag_data, &str);
+	if (flag_data->zero == TRUE)
+	{
+		if (flag_data->plus == TRUE || flag_data->space == TRUE || neg == TRUE)
+			flag_data->padding--;
+		handle_padding_num(flag_data, &str);
+	}
 	if (flag_data->space == TRUE && flag_data->plus == FALSE && neg == FALSE)
 		ft_str_replace_front(" ", &str);
-	if (flag_data->plus == TRUE)
-	{
-		if (i >= 0)
-			ft_str_replace_front("+", &str);
-	}
 	if (neg == TRUE)
 		ft_str_replace_front("-", &str);
-	handle_padding_num(flag_data, &str);
+	if (flag_data->plus == TRUE)
+		ft_str_replace_front("+", &str);
+	if (flag_data->zero == FALSE)
+		handle_padding_num(flag_data, &str);
 	add_str_to_buffer(data, str);
 	free(str);
 }
@@ -49,6 +57,7 @@ void converter_c(t_data *data, t_flag_data *flag_data)
 {
 	char c;
 	char *str;
+
 
 	handle_wildcard(data, flag_data);
 	c = va_arg( data->arg, int );
@@ -70,9 +79,13 @@ void converter_o(t_data *data, t_flag_data *flag_data)
 	unsigned long long i;
 	char *str;
 
+
 	handle_wildcard(data, flag_data);
 	i = handle_lh_unsigned(data, flag_data);
-	str = ft_itoa_base(i, 8);
+	if (i == 0 && flag_data->point == TRUE && flag_data->precision == 0)
+		str = ft_strnew(1);
+	else
+		str = ft_itoa_base(i, 8);
 	if (flag_data->sharp == TRUE && str[0] != '0')
 		ft_str_replace_front("0", &str);
 	handle_precision(flag_data, &str);
@@ -88,7 +101,10 @@ void converter_u(t_data *data, t_flag_data *flag_data)
 
 	handle_wildcard(data, flag_data);
 	i = handle_lh_unsigned(data, flag_data);
-	str = ft_itoa_base(i, 10);
+	if (i == 0 && flag_data->point == TRUE && flag_data->precision == 0)
+		str = ft_strnew(1);
+	else
+		str = ft_itoa_base(i, 10);
 	handle_precision(flag_data, &str);
 	handle_padding_num(flag_data, &str);
 	add_str_to_buffer(data, str);
@@ -100,13 +116,21 @@ void converter_x(t_data *data, t_flag_data *flag_data)
 	unsigned int i;
 	char *str;
 
+	flag_data->plus = FALSE;
 	handle_wildcard(data, flag_data);
 	i = handle_lh_unsigned(data, flag_data);
-	str = ft_itoa_base(i, 16);
-	if (flag_data->sharp == TRUE)
-		ft_str_replace_front("0x", &str);
+	if (i == 0 && flag_data->point == TRUE && flag_data->precision == 0)
+		str = ft_strnew(1);
+	else
+		str = ft_itoa_base(i, 16);
 	handle_precision(flag_data, &str);
+	if (flag_data->sharp == TRUE && flag_data->zero == FALSE && i != 0)
+		ft_str_replace_front("0x", &str);
+	else if (flag_data->sharp == TRUE && flag_data->zero == TRUE && i != 0)
+		flag_data->padding = flag_data->padding - 2;
 	handle_padding_num(flag_data, &str);
+	if (flag_data->sharp == TRUE && flag_data->zero == TRUE && i != 0)
+		ft_str_replace_front("0x", &str);
 	add_str_to_buffer(data, str);
 	free(str);
 }
@@ -116,13 +140,21 @@ void converter_x_maj(t_data *data, t_flag_data *flag_data)
 	unsigned int i;
 	char *str;
 
+	flag_data->plus = FALSE;
 	handle_wildcard(data, flag_data);
 	i = handle_lh_unsigned(data, flag_data);
-	str = ft_itoa_base(i, 16);
-	if (flag_data->sharp == TRUE)
-		ft_str_replace_front("0X", &str);
+	if (i == 0 && flag_data->point == TRUE && flag_data->precision == 0)
+		str = ft_strnew(1);
+	else
+		str = ft_itoa_base(i, 16);
 	handle_precision(flag_data, &str);
+	if (flag_data->sharp == TRUE && flag_data->zero == FALSE && i != 0)
+		ft_str_replace_front("0X", &str);
+	else if (flag_data->sharp == TRUE && flag_data->zero == TRUE && i != 0)
+		flag_data->padding = flag_data->padding - 2;
 	handle_padding_num(flag_data, &str);
+	if (flag_data->sharp == TRUE && flag_data->zero == TRUE && i != 0)
+		ft_str_replace_front("0X", &str);
 	ft_str_toupper(str);
 	add_str_to_buffer(data, str);
 	free(str);
@@ -133,11 +165,21 @@ void converter_p(t_data *data, t_flag_data *flag_data)
 	unsigned int i;
 	char *str;
 
+	flag_data->plus = FALSE;
 	handle_wildcard(data, flag_data);
-	i = va_arg(data->arg, unsigned int);
-	str = ft_itoa_base(i, 16);
-	ft_str_replace_front("0x", &str);
+	i = handle_lh_unsigned(data, flag_data);
+	if (i == 0 && flag_data->point == TRUE && flag_data->precision == 0)
+		str = ft_strnew(1);
+	else
+		str = ft_itoa_base(i, 16);
+	handle_precision(flag_data, &str);
+	if (flag_data->zero == FALSE)
+		ft_str_replace_front("0x", &str);
+	else if (flag_data->zero == TRUE)
+		flag_data->padding = flag_data->padding - 2;
 	handle_padding_num(flag_data, &str);
+	if (flag_data->zero == TRUE)
+		ft_str_replace_front("0x", &str);
 	add_str_to_buffer(data, str);
 	free(str);
 }
@@ -147,7 +189,9 @@ void converter_percent(t_data *data, t_flag_data *flag_data)
 	(void)flag_data;
 	char *str;
 
+	handle_wildcard(data, flag_data);
 	str = ft_strdup("%");
+	handle_padding(flag_data, &str);
 	add_str_to_buffer(data, str);
 	free(str);
 }
