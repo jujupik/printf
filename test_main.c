@@ -120,8 +120,8 @@ void test_flag_int(int nb_test, BOOL flag, char *test)
 		if (ret1 != ret2 || ft_strcmp(tmp1, tmp2) != 0)
 		{
 			printf("|| Error with flag %s with value [%d] ||\n", str, value);
-			printf("Them : %s\n", tmp1);
-			printf("Our  : %s\n\n", tmp2);
+			printf("Them : {%s} -> %d\n", tmp1, ret1);
+			printf("Our  : {%s} -> %d\n\n", tmp2, ret2);
 		}
 
 		free(str);
@@ -173,8 +173,8 @@ void test_flag_c(int nb_test, BOOL flag)
 		if (ret1 != ret2 || ft_strcmp(tmp1, tmp2) != 0)
 		{
 			printf("|| Error with flag %s with value [%c] ||\n", str, value);
-			printf("Them : %s\n", tmp1);
-			printf("Our  : %s\n\n", tmp2);
+			printf("Them : {%s} -> %d\n", tmp1, ret1);
+			printf("Our  : {%s} -> %d\n\n", tmp2, ret2);
 		}
 
 		free(str);
@@ -230,8 +230,8 @@ void test_flag_s(int nb_test, BOOL flag)
 		if (ret1 != ret2 || ft_strcmp(tmp1, tmp2) != 0)
 		{
 			printf("|| Error with flag %s with value [%s] ||\n", str, value);
-			printf("Them : %s\n", tmp1);
-			printf("Our  : %s\n\n", tmp2);
+			printf("Them : {%s} -> %d\n", tmp1, ret1);
+			printf("Our  : {%s} -> %d\n\n", tmp2, ret2);
 		}
 		free(str);
 	}
@@ -243,13 +243,13 @@ void test_main()
 
 	int nb_test = 200000;
 
-	test_flag_int(nb_test, TRUE, "d");
-	test_flag_int(nb_test, TRUE, "i");
-	test_flag_int(nb_test, TRUE, "o");
-	test_flag_int(nb_test, TRUE, "u");
-	test_flag_int(nb_test, TRUE, "x");
-	test_flag_int(nb_test, TRUE, "X");
-	test_flag_int(nb_test, TRUE, "p");
+	// test_flag_int(nb_test, TRUE, "d");
+	// test_flag_int(nb_test, TRUE, "i");
+	// test_flag_int(nb_test, TRUE, "o");
+	// test_flag_int(nb_test, TRUE, "u");
+	// test_flag_int(nb_test, TRUE, "x");
+	// test_flag_int(nb_test, TRUE, "X");
+	// test_flag_int(nb_test, TRUE, "p");
 	test_flag_c(nb_test, TRUE);
-	test_flag_s(nb_test, TRUE);
+	// test_flag_s(nb_test, TRUE);
 }

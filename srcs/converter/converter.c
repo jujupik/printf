@@ -58,15 +58,27 @@ void converter_c(t_data *data, t_flag_data *flag_data)
 	char c;
 	char *str;
 
-
+	str = NULL;
+	flag_data->space = FALSE;
 	handle_wildcard(data, flag_data);
 	c = va_arg( data->arg, int );
-	str = ft_strnew_c(1, c);
-	handle_padding_c(flag_data, &str);
-	add_str_to_buffer(data, str);
 	if (c == '\0')
+	{
+		if (flag_data->padding > 1)
+			str = ft_strnew_c(flag_data->padding - 1, ' ');
+		if (flag_data->minus == FALSE)
+			add_str_to_buffer(data, str);
 		add_char_to_buffer(data, '\0');
-	free(str);
+		if (flag_data->minus == TRUE)
+			add_str_to_buffer(data, str);
+	}
+	else
+	{
+		str = ft_strnew_c(1, c);
+		handle_padding_c(flag_data, &str);
+		add_str_to_buffer(data, str);
+		free(str);
+	}
 }
 
 void converter_i(t_data *data, t_flag_data *flag_data)

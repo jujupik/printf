@@ -35,6 +35,8 @@ void	add_str_to_buffer(t_data *data, char *str)
 {
 	size_t	i;
 
+	if (str == NULL)
+		return ;
 	i = 0;
 	while (str[i] != '\0')
 	{
