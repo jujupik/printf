@@ -1,10 +1,8 @@
 #include "ft_printf.h"
 
-typedef void (* convert_funct )(t_data *data, t_flag_data *flag_data);
-
-void create_convert_funct_tab(convert_funct *tab)
+void	create_convert_funct_tab(t_convert_funct *tab)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (i < 128)
@@ -25,20 +23,15 @@ void create_convert_funct_tab(convert_funct *tab)
 	tab['%'] = converter_percent;
 }
 
-
-void handle_converter(t_data *data, t_flag_data *flag_data, char *cmd, size_t i)
+void	handle_converter(t_data *data, t_flag_data *flag_data,
+			char *cmd, size_t i)
 {
-	static convert_funct tab[128] = {NULL}; //initialise un tableau set la premiere case a null
+	static t_convert_funct	tab[128] = {NULL};
 
 	if (tab[0] == NULL)
-		create_convert_funct_tab(tab); //set le tab et les cases des converteurs (cf handle_flag)
-
+		create_convert_funct_tab(tab);
 	if (tab[(size_t)(cmd[i])] == NULL)
-	{
-		converter_other(data, flag_data, cmd[i]); //applique les flags si converteur NULL(donc inexistant ou pas gere)
-	}
+		converter_other(data, flag_data, cmd[i]);
 	else
-	{
-		tab[(size_t)(cmd[i])](data, flag_data); //execute la fonction du converteur correspondant
-	}
+		tab[(size_t)(cmd[i])](data, flag_data);
 }

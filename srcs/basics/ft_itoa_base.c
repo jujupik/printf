@@ -1,8 +1,8 @@
 #include "ft_printf.h"
 
-int	nbr_len(long long n, int base)
+int		nbr_len(long long n, int base)
 {
-	unsigned int len;
+	unsigned int	len;
 
 	len = 0;
 	if (n == 0)
@@ -17,9 +17,9 @@ int	nbr_len(long long n, int base)
 	return (len);
 }
 
-char		*ft_itoa_base(long long n, int base)
+char	*ft_itoa_base(long long n, int base)
 {
-	static char *base_str = "0123456789abcdef";
+	static char		*base_str = "0123456789abcdef";
 	char			*str;
 	unsigned int	l;
 	unsigned int	i;
@@ -36,9 +36,8 @@ char		*ft_itoa_base(long long n, int base)
 	{
 		str[0] = '-';
 		i++;
-	}
-	if (n < 0)
 		n = -n;
+	}
 	while (i < l--)
 	{
 		str[l] = base_str[(n % base)];
@@ -47,8 +46,7 @@ char		*ft_itoa_base(long long n, int base)
 	return (str);
 }
 
-
-char		*ft_itoa(long long n)
+char	*ft_itoa(long long n)
 {
 	return (ft_itoa_base(n, 10));
 }

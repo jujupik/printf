@@ -1,9 +1,9 @@
 #include "ft_printf.h"
 
-void ft_target_strncat(char *s1, char *s2, size_t start, size_t len)
+void	ft_target_strncat(char *s1, char *s2, size_t start, size_t len)
 {
-	size_t i;
-	size_t j;
+	size_t	i;
+	size_t	j;
 
 	i = start;
 	j = 0;
