@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-void	create_flag_funct_tab(flag_funct *tab)
+void	create_flag_funct_tab(t_flag_funct *tab)
 {
 	size_t i;
 
@@ -31,7 +31,7 @@ void	create_flag_funct_tab(flag_funct *tab)
 size_t	handle_flag(t_flag_data *data, char *cmd, size_t i)
 {
 	size_t				j;
-	static flag_funct	tab[128] = {NULL};
+	static t_flag_funct	tab[128] = {NULL};
 
 	if (tab[0] == NULL)
 		create_flag_funct_tab(tab);

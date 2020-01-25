@@ -243,12 +243,12 @@ void test_main()
 
 	int nb_test = 20000000;
 
-	// test_flag_int(nb_test, TRUE, "d");
+	 //test_flag_int(nb_test, TRUE, "d");
 	// test_flag_int(nb_test, TRUE, "i");
 	// test_flag_int(nb_test, TRUE, "o");
 	// test_flag_int(nb_test, TRUE, "u");
 	// test_flag_int(nb_test, TRUE, "x");
-	 test_flag_int(nb_test, TRUE, "X");
+	test_flag_int(nb_test, TRUE, "X");
 	// test_flag_int(nb_test, TRUE, "p");
 	//test_flag_c(nb_test, TRUE);
 	// test_flag_s(nb_test, TRUE);

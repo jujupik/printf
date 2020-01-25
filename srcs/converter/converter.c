@@ -19,6 +19,21 @@ void	converter_s(t_data *data, t_flag_data *flag_data)
 	free(str2);
 }
 
+int		converter_d_annexe(t_flag_data *flag_data, int i, char **str, BOOL *neg)
+{
+	if (i < 0)
+	{
+		flag_data->plus = FALSE;
+		(*neg) = TRUE;
+		i = -i;
+	}
+	if (i == 0 && flag_data->point == TRUE && flag_data->precision == 0)
+		(*str) = ft_strnew(1);
+	else
+		(*str) = ft_itoa(i);
+	return (i);
+}
+
 void	converter_d(t_data *data, t_flag_data *flag_data)
 {
 	long long	i;
@@ -28,16 +43,7 @@ void	converter_d(t_data *data, t_flag_data *flag_data)
 	neg = FALSE;
 	handle_wildcard(data, flag_data);
 	i = handle_lh(data, flag_data);
-	if (i < 0)
-	{
-		flag_data->plus = FALSE;
-		neg = TRUE;
-		i = -i;
-	}
-	if (i == 0 && flag_data->point == TRUE && flag_data->precision == 0)
-		str = ft_strnew(1);
-	else
-		str = ft_itoa(i);
+	i = converter_d_annexe(flag_data, i, &str, &neg);
 	handle_precision(flag_data, &str);
 	if (flag_data->zero == TRUE)
 	{

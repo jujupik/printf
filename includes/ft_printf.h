@@ -44,8 +44,8 @@ typedef struct	s_flag_data
 	int		h_value;
 }				t_flag_data;
 
-typedef size_t	(* flag_funct)(t_flag_data *data, char *cmd, int i);
-typedef void	(* t_convert_funct)(t_data *data, t_flag_data *flag_data);
+typedef size_t	(*t_flag_funct)(t_flag_data *data, char *cmd, int i);
+typedef void	(*t_convert_funct)(t_data *data, t_flag_data *flag_data);
 t_flag_data		create_flag_data();
 void			print_flag_data(t_flag_data *data);
 void			read_cmd(char *cmd, t_data *data);
